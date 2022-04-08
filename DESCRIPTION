@@ -5,13 +5,16 @@ Version: 0.0.0.9000
 Author: Luke DiMartino
 Maintainer: Luke DiMartino <lad132@georgetown.edu>
 Description: This package contains mostly wrappers that help me work more efficiently and make my code more readable.
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports: 
+	dplyr,
 	crayon,
 	ggplot2,
 	parameters,
-	paint
+	paint,
+	broom
+@importFrom:
+	crayon %+%

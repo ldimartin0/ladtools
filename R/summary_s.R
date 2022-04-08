@@ -3,7 +3,7 @@ summary_s <- function(lm) {
 
 	df_p <- parameters::parameters(lm)
 	names(df_p)[1:2] <- c("Term", "Coef")
-	df_p <- dplyr::select(df_p, -c(CI, df_error))
+	df_p <- dplyr::select(df_p, -c("CI", "df_error"))
 	df_p <- dplyr::mutate(df_p, dplyr::across(where(is.numeric), ~format(round(., digits = 2))))
 	df_p$Term[df_p$Term == "(Intercept)"] <- "Intcpt"
 
