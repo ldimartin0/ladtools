@@ -1,12 +1,17 @@
-Package: ldtools
-Title: What the Package Does (One Line, Title Case)
+Package: ladtools
+Title: Some tools that make my life easier
+Date: 2022-04-08
 Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Author: Luke DiMartino
+Maintainer: Luke DiMartino <lad132@georgetown.edu>
+Description: This package contains mostly wrappers that help me work more efficiently and make my code more readable.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+Imports: 
+	crayon,
+	ggplot2,
+	parameters,
+	paint
