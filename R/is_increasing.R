@@ -1,22 +1,44 @@
-#' Determine Whether a Vector is Monotonically Increasing or Decreasing
+#' Determine Whether a Vector is Increasing or Decreasing
 #'
-#' `is_increasing()` and `is_decreasing()` are trivial wrapper functions that determine whether a numerical vector is increasing or decreasing
-#' @param vec
+#' `is_increasing()` and `is_decreasing()` are trivial wrapper functions to enhance code readability. They determine whether a numerical vector is increasing or decreasing monotonically. `strictly` (default `FALSE`) excludes cases where the difference between consecutive elements is zero.
 #'
-#' @return
+#' @param vec A numerical vector.
+#' @param strictly Does a difference of zero count as increasing/decreasing? By default, `c(1, 1, 2)` is increasing, with `strictly = TRUE` it is not.
+#' @param na.rm A logical value indicating whether `NA` values should be stripped before the vector is determined to be increasing or decreasing.
+#'
+#' @return logical.
 #' @export
 #'
 #' @examples
-is_increasing <- function(vec) {
-	if (!is.numeric(vec)) {stop("Vector must be numeric", .call = TRUE)}
+#' is_increasing(c(1:10))
+#' is_increasing(c(1, 2, 2, 2, 3), strictly = TRUE)
+#' is_decreasing(c(3, 2, 2, 5, 3, 2, 1))
+is_increasing <- function(vec, strictly = FALSE, na.rm = FALSE) {
+	if (!is.numeric(vec)) {
+		stop("Vector must be numeric", .call = TRUE)
+	}
 
-	out <- all(vec == cummax(vec))
+	if (!strictly) {
+		out <- all(vec == cummax(vec))
+	}
+
+	if (strictly) {
+		out <- !is.unsorted(vec, strictly = TRUE, na.rm = na.rm)
+	}
+
 	return(out)
 }
 
-is_decreasing <- function(vec) {
+is_decreasing <- function(vec, strictly = FALSE, na.rm = FALSE) {
 	if (!is.numeric(vec)) {stop("Vector must be numeric", .call = TRUE)}
 
-	out <- all(vec == cummin(vec))
+	if (!strictly) {
+		out <- all(vec == cummin(vec))
+	}
+
+	if (strictly) {
+		out <- !is.unsorted(rev(vec), strictly = TRUE, na.rm = na.rm)
+	}
+
 	return(out)
 }
