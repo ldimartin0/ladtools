@@ -4,15 +4,15 @@ summary_s <- function(lm) {
 	df_p <- parameters::parameters(lm)
 	names(df_p)[1:2] <- c("Term", "Coef")
 	df_p <- dplyr::select(df_p, -c("CI", "df_error"))
-	df_p <- dplyr::mutate(df_p, dplyr::across(where(is.numeric), ~format(round(., digits = 2))))
+	df_p <- dplyr::mutate(df_p, dplyr::across(tidyselect::where(is.numeric), ~format(round(., digits = 2))))
 	df_p$Term[df_p$Term == "(Intercept)"] <- "Intcpt"
 
 
 	paint::paint(df_p, paint_align_row_head = "center")
 
-	df_g <- glance(lm)
+	df_g <- broom::glance(lm)
 
-	df_g <- dplyr::mutate(df_g, dplyr::across(where(is.numeric), ~format(round(., digits = 2))))
+	df_g <- dplyr::mutate(df_g, dplyr::across(tidyselect::where(is.numeric), ~format(round(., digits = 2))))
 
 	cat(crayon::italic("r.sq + adj.r.sq: ") %+% " " %+% crayon::silver(df_g$r.squared) %+% " " %+% crayon::blue(df_g$adj.r.squared) %+% "\n")
 	cat(crayon::italic("stat + p-val: ") %+% " " %+% crayon::silver(df_g$statistic) %+% " " %+% crayon::blue(df_g$p.value) %+% "\n")

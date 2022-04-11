@@ -56,7 +56,7 @@ A \code{function} will be called with a single argument, the plot data. The retu
 This function is an exact duplication of \code{\link[ggplot2:geom_smooth]{ggplot2::geom_smooth()}} with defaults more appropriate for statistics and econometrics. By default, \code{\link[=geom_lm]{geom_lm()}} plots with \link{method = "lm"} for a linear trend line and with \link{se = FALSE} because plotting standard errors around a linear trend confuses the viewer more than it demonstrates statistical uncertainty.
 }
 \examples{
-ggplot2::ggplot(mpg, aes(displ, hwy)) +
+ggplot(ggplot2::mpg, aes(displ, hwy)) +
   ggplot2::geom_point() +
   geom_lm()
 }

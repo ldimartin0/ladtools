@@ -11,10 +11,14 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports: 
 	dplyr,
+	tidyselect,
 	crayon,
-	ggplot2,
 	parameters,
 	paint,
 	broom
 @importFrom:
 	crayon %+%
+	ggplot2 ggplot()
+	ggplot2 aes()
+Depends:
+	ggplot2

@@ -13,20 +13,16 @@
 #' is_increasing(c(1:10))
 #' is_increasing(c(1, 2, 2, 2, 3), strictly = TRUE)
 #' is_decreasing(c(3, 2, 2, 5, 3, 2, 1))
-is_increasing <- function(vec, strictly = FALSE, na.rm = FALSE) {
-	if (!is.numeric(vec)) {
-		stop("Vector must be numeric", .call = TRUE)
-	}
+is_decreasing <- function(vec, strictly = FALSE, na.rm = FALSE) {
+	if (!is.numeric(vec)) {stop("Vector must be numeric", .call = TRUE)}
 
 	if (!strictly) {
-		out <- all(vec == cummax(vec))
+		out <- all(vec == cummin(vec))
 	}
 
 	if (strictly) {
-		out <- !is.unsorted(vec, strictly = TRUE, na.rm = na.rm)
+		out <- !is.unsorted(rev(vec), strictly = TRUE, na.rm = na.rm)
 	}
 
 	return(out)
 }
-
-

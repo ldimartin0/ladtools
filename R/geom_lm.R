@@ -24,7 +24,7 @@
 #' @export
 #'
 #' @examples
-#' ggplot2::ggplot(ggplot2::mpg, aes(displ, hwy)) +
+#' ggplot(ggplot2::mpg, aes(displ, hwy)) +
 #'   ggplot2::geom_point() +
 #'   geom_lm()
 geom_lm <- function (mapping = NULL, data = NULL, stat = "smooth", position = "identity", ..., method = "lm", formula = y ~ x, se = FALSE, na.rm = FALSE, orientation = NA, show.legend = NA, inherit.aes = TRUE)
