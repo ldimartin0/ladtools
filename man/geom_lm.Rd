@@ -2,61 +2,46 @@
 % Please edit documentation in R/geom_lm.R
 \name{geom_lm}
 \alias{geom_lm}
-\title{Plotting a linear trend}
+\title{A Convenient \code{ggplot2} Function for Linear Regression Plotting}
 \usage{
-geom_lm(
-  mapping = NULL,
-  data = NULL,
-  stat = "smooth",
-  position = "identity",
-  ...,
-  method = "lm",
-  formula = y ~ x,
-  se = FALSE,
-  na.rm = FALSE,
-  orientation = NA,
-  show.legend = NA,
-  inherit.aes = TRUE
-)
+geom_lm(method = "lm", se = FALSE, formula = y ~ x, ...)
 }
 \arguments{
-\item{mapping}{Set of aesthetic mappings created by \code{\link[=aes]{aes()}} or \code{\link[=aes_]{aes_()}}. If specified and \link{inherit.aes = TRUE} (the default), it is combined with the default mapping at the top level of the plot. You must supply mapping if there is no plot mapping}
+\item{method}{Smoothing method (function) to use, accepts either
+\code{NULL} or a character vector, e.g. \code{"lm"}, \code{"glm"}, \code{"gam"}, \code{"loess"}
+or a function, e.g. \code{MASS::rlm} or \code{mgcv::gam}, \code{stats::lm}, or \code{stats::loess}.
+\code{"auto"} is also accepted for backwards compatibility.  It is equivalent to
+\code{NULL}.
 
-\item{data}{@param data The data to be displayed in this layer. There are three options:
-If \code{NULL}, the default, the data is inherited from the plot data as specified in the call to \code{\link[=ggplot]{ggplot()}}.
+For \code{method = NULL} the smoothing method is chosen based on the
+size of the largest group (across all panels). \code{\link[stats:loess]{stats::loess()}} is
+used for less than 1,000 observations; otherwise \code{\link[mgcv:gam]{mgcv::gam()}} is
+used with \code{formula = y ~ s(x, bs = "cs")} with \code{method = "REML"}. Somewhat anecdotally,
+\code{loess} gives a better appearance, but is \eqn{O(N^{2})}{O(N^2)} in memory,
+so does not work for larger datasets.
 
-A \code{data.frame}, or other object, will override the plot data. All objects will be fortified to produce a data frame. See \code{\link[=fortify]{fortify()}} for which variables will be created.
+If you have fewer than 1,000 observations but want to use the same \code{gam()}
+model that \code{method = NULL} would use, then set
+\verb{method = "gam", formula = y ~ s(x, bs = "cs")}.}
 
-A \code{function} will be called with a single argument, the plot data. The return value must be a \code{data.frame}, and will be used as the layer data. A \code{function} can be created from a \code{formula} (e.g. \code{~ head(.x, 10)}).}
+\item{se}{Display confidence interval around smooth? (\code{TRUE} by default, see
+\code{level} to control.)}
 
-\item{stat}{Used to override the default connection between \code{geom_smooth()} and \code{stat_smooth()}.}
+\item{formula}{Formula to use in smoothing function, eg. \code{y ~ x},
+\code{y ~ poly(x, 2)}, \code{y ~ log(x)}. \code{NULL} by default, in which case
+\code{method = NULL} implies \code{formula = y ~ x} when there are fewer than 1,000
+observations and \code{formula = y ~ s(x, bs = "cs")} otherwise.}
 
-\item{position}{Position adjustment, either as a string, or the result of a call to a position adjustment function.}
-
-\item{...}{Other arguments passed on to \code{ggplot2::layer()}. These are often aesthetics.}
-
-\item{method}{Smoothing method (function) to use, accepts either \code{NULL} or a character vector. Defaults to \code{stats::lm()}, unlike \code{ggplot2::geom_smooth()}.}
-
-\item{formula}{Formula to use in smoothing function, eg. \code{y ~ x}, \code{y ~ poly(x, 2)}, \code{y ~ log(x)}. \code{NULL} by default, in which case \code{method = NULL} implies \code{formula = y ~ x} when there are fewer than 1,000 observations and \code{formula = y ~ s(x, bs = "cs")} otherwise.}
-
-\item{se}{Display confidence interval around smooth? (\code{FALSE} by default, see\code{ level} to control.)}
-
-\item{na.rm}{IF \code{FALSE}, the default, missing values are removed with a warning. If \code{TRUE} missing values are silently removed.}
-
-\item{orientation}{The orientation of the layer. The default (\code{NA}) automatically determines the orientation from the aesthetic mapping.}
-
-\item{show.legend}{logical. Should this layer be included in the legends. \code{NA}, the default, includes if any aesthetics are mapped.}
-
-\item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics, rather than combining with them.}
-}
-\value{
-
+\item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}. These are
+often aesthetics, used to set an aesthetic to a fixed value, like
+\code{colour = "red"} or \code{size = 3}. They may also be parameters
+to the paired geom/stat.}
 }
 \description{
-This function is an exact duplication of \code{\link[ggplot2:geom_smooth]{ggplot2::geom_smooth()}} with defaults more appropriate for statistics and econometrics. By default, \code{\link[=geom_lm]{geom_lm()}} plots with \link{method = "lm"} for a linear trend line and with \link{se = FALSE} because plotting standard errors around a linear trend confuses the viewer more than it demonstrates statistical uncertainty.
+This function is an exact duplication of \code{ggplot2::geom_smooth()} with defaults more appropriate for statistics and econometrics. By default, \code{geom_lm()} plots with \code{method = "lm"} for a linear trend line and with \code{se = FALSE} because plotting standard errors around a linear trend confuses the viewer more than it demonstrates statistical uncertainty.
 }
 \examples{
-ggplot(ggplot2::mpg, aes(displ, hwy)) +
+ggplot(mpg, aes(displ, hwy)) +
   ggplot2::geom_point() +
   geom_lm()
 }
