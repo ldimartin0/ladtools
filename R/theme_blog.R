@@ -2,6 +2,8 @@
 #'
 #' This theme controls all non-data display and standardizes it for my website.
 #' @import ggplot2
+#'
+#' @export
 theme_blog <- function() {
   theme_bw(base_size = 11, base_family = "Verdana") %+replace%
     theme(
@@ -53,7 +55,7 @@ theme_blog <- function() {
         margin = margin(t = 0, b = 0)
       ),
       legend.key.size = unit(.65, "lines"),
-      # Remove minor gridlines
+      # Remove minor grid lines
       panel.grid.minor = element_blank()
     )
 }

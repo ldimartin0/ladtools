@@ -4,6 +4,7 @@
 #'
 #' @inheritParams ggplot2::geom_smooth
 #'
+#' @export
 #' @examples
 #' ggplot(mpg, aes(displ, hwy)) +
 #'   ggplot2::geom_point() +
